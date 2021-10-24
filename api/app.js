@@ -18,3 +18,4 @@ app.listen(8000,()=>{
     console.log("Api server open");
 });
 app.use('/auth',authRouter);
+app.use('/post',postRouter);
