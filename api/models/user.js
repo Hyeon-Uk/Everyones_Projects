@@ -1,27 +1,34 @@
 const Sequelize = require('sequelize');
 
-module.exports=((sequelize,DataTypes)=>{
-    return sequelize.define('user',{
-        email:{
-            type:Sequelize.STRING(40),
-            allowNull:false,
-            unique:true
+module.exports = ((sequelize, DataTypes) => {
+    const user = sequelize.define('users', {
+        u_id:{
+            type:Sequelize.INTEGER,
+            primaryKey:true,
+            autoIncrement:true,
+            
         },
-        password:{
-            type:Sequelize.STRING(100),
-            allowNull:false,
+        u_email: {
+            type: Sequelize.STRING(40),
+            allowNull: false,
+            unique: true,
+            validate:{
+                isEmail:true,
+            }
         },
-        nick:{
-            type:Sequelize.STRING(15),
-            allowNull:false,
+        u_password: {
+            type: Sequelize.STRING(100),
+            allowNull: false
         },
-        // provider:{
-        //     type:Sequelize.STRING(10),
-        //     allowNull:false,
-        //     defaultValue:'local',
-        // },
-    },{
-        timestamps:true,
-        paranoid:true,
-    })
+        u_nick: {
+            type: Sequelize.STRING(15),
+            allowNull: false,
+            unique: true
+        }
+    }, {
+        timestamps: true,
+        paranoid: true
+    });
+    
+    return user;
 })

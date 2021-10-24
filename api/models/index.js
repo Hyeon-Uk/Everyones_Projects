@@ -35,5 +35,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.User=require('./user')(sequelize,Sequelize);
+db.Post=require('./post')(sequelize,Sequelize);
+db.RPosition=require('./rPosition')(sequelize,Sequelize);
 
+//relationships
+db.User.hasMany(db.Post,{foreignKey:'publisher',sourceKey:'u_id'});
+db.Post.belongsTo(db.User,{foreignKey:"publisher",sourceKey:'u_id'});
 module.exports = db;
