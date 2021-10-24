@@ -4,6 +4,7 @@ const dotenv=require('dotenv');
 const cors=require('cors');
 const bodyParser=require('body-parser');
 const authRouter=require('./routes/auth');
+const postRouter=require('./routes/post');
 const {sequelize} = require('./models/index');
 
 app.use(cors());
