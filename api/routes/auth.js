@@ -7,9 +7,9 @@ const {User} = require('../models');
 
 
 router.post('/register', async (req, res) => {
-    const {email, nick, password} = req.body;
+    const {u_email, u_nick, u_password} = req.body;
     const isUser = await User.findOne({where: {
-            email
+            u_email
         }});
     if (isUser) {
         res
@@ -17,11 +17,11 @@ router.post('/register', async (req, res) => {
             .json({message: "이미 가입된 상태입니다"});
     } else {
         const savedUser = {
-            email,
-            nick,
-            password: cryptoJS
+            u_email,
+            u_nick,
+            u_password: cryptoJS
                 .AES
-                .encrypt(req.body.password, process.env.SECRET_KEY)
+                .encrypt(req.body.u_password, process.env.SECRET_KEY)
                 .toString()
         };
         try {
@@ -39,35 +39,37 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        console.log("enter!");
         const user = await User.findOne({
             where: {
-                email: req.body.email
+                u_email: req.body.u_email
             }
         });
 
         !user && res
             .status(500)
-            .json("Wrong email!");
+            .json("Wrong u_email!");
 
-        const encryptedPass = user.password;
+        const encryptedPass = user.u_password;
         const bytes = cryptoJS
             .AES
             .decrypt(encryptedPass, process.env.SECRET_KEY);
         const original = bytes.toString(cryptoJS.enc.Utf8);
 
-        original !== req.body.password && res
+        original !== req.body.u_password && res
             .status(401)
-            .json("Wrong password");
+            .json("Wrong u_password");
         const accessToken = jwt.sign({
-            email: user.email,
-            nick: user.nick
+            u_id:user.u_id,
+            u_email: user.u_email,
+            u_nick: user.u_nick
         }, process.env.JWT_SECRET, {expiresIn: "1h"});
-
         const userData = {
             accessToken,
-            email: user.email,
-            nick: user.nick
+            u_email: user.u_email,
+            u_nick: user.u_nick
         }
+        res.cookie('loginToken',accessToken);
         res
             .status(200)
             .json(userData);
