@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const verifyUser = (req, res, next) => {
+const verifyToken = (req, res, next) => {
     const token = req
         .headers
         .token.split(" ")[1];
@@ -9,7 +9,7 @@ const verifyUser = (req, res, next) => {
             error && res
                 .status(403)
                 .json("Token is not valid");
-            req.user = user;
+            req.user=user;
             next();
         })
     } else {
@@ -19,6 +19,18 @@ const verifyUser = (req, res, next) => {
     }
 }
 
+const verifyTokenAndAuthorization=(req,res,next)=>{
+    verifyToken(req,res,()=>{
+        if(req.user.u_id==req.params.u_id){
+            next();
+        }
+        else{
+            res.status(403).json("You are not allowed");
+        }
+    })
+}
+
+
 module.exports = {
-    verifyUser
+    verifyToken,verifyTokenAndAuthorization
 };
