@@ -5,8 +5,8 @@ module.exports = ((sequelize, DataTypes) => {
         u_id:{
             type:Sequelize.INTEGER,
             primaryKey:true,
+            allowNull:true,
             autoIncrement:true,
-            
         },
         u_email: {
             type: Sequelize.STRING(40),
