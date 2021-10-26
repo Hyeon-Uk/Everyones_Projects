@@ -8,14 +8,21 @@ const {User} = require('../models');
 
 router.post('/register', async (req, res) => {
     const {u_email, u_nick, u_password} = req.body;
-    const isUser = await User.findOne({where: {
+    const EmailCheck = await User.findOne({where: {
             u_email
         }});
-    if (isUser) {
+    const NickCheck = await User.findOne({where:{
+        u_nick
+    }})
+    if (EmailCheck) {
         res
             .status(200)
-            .json({message: "이미 가입된 상태입니다"});
-    } else {
+            .json("이미 가입된 상태입니다");
+    }
+    else if(NickCheck){
+        res.status(200).json("닉네임이 중복됩니다.");
+    }
+    else {
         const savedUser = {
             u_email,
             u_nick,
@@ -26,9 +33,10 @@ router.post('/register', async (req, res) => {
         };
         try {
             await User.create(savedUser);
+            const {u_password,...other}=savedUser;
             res
                 .status(201)
-                .json(savedUser);
+                .json(other);
         } catch (err) {
             res
                 .status(500)
