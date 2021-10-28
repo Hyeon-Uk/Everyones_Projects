@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
         });
         !user && res
             .status(500)
-            .json("Wrong u_email!");
+            .json("Wrong email!");
         const encryptedPass = user.u_password;
         const bytes = cryptoJS
             .AES
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
 
         original !== req.body.u_password && res
             .status(401)
-            .json("Wrong u_password");
+            .json("Wrong password");
         const accessToken = jwt.sign({
             u_id:user.u_id
         }, process.env.JWT_SECRET, {expiresIn: "1h"});
