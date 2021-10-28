@@ -12,6 +12,7 @@ const Text=styled.div`
     margin:15px 0px;
     width:100%;
     font-size:50px;
+    font-weight:800;
 `
 
 const Form=styled.div`
