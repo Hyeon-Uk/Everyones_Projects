@@ -2,7 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Color ,Server} from '../Constants'
-
+axios.defaults.withCredentials=true;
+// axios.defaults.baseURL="http://localhost:8000/"
 const Box=styled.div`
     width:50%;
 `
@@ -44,6 +45,13 @@ const SubmitButton=styled.input`
     cursor:pointer;
 `
 
+const Warning=styled.span`
+    font-size:13px;
+    color:red;
+    margin-top:10px;
+`
+
+
 const LoginForm = ({setUser}) => {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
@@ -55,30 +63,43 @@ const LoginForm = ({setUser}) => {
         setPassword(e.target.value);
     }
     const Login=async (e)=>{
-        const inputUser={
-            "u_email":email,
-            "u_password":password
-        };
-        setUser(inputUser);
-        // try {
-        //     const userData=await axios.post(Server.url+"/auth/login",inputUser);
-        //     if(userData.accessToken){
-                
-        //     }
-        //     else{
-        //         setState(userData);
-        //     }
-        // } catch (error) {
-        //     setState("다시 시도해주세요");
-        // }
+        if(email===""||password===""){
+            setState("Input All Info");
+            return;
+        }
+        try {
+            const inputData={
+                u_email:email,
+                u_password:password
+            }
+            const get=await fetch(Server.url+'/auth/login',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(inputData)
+            }).then(res=>res.json());
+            
+            if(get.accessToken){
+                setUser({
+                    u_email:get.u_email,
+                    u_nick:get.u_nick
+                });
+            }
+            else{
+                setState(get)
+            }
+            
+        } catch (error) {
+            setState("다시 시도해주세요");
+        }
     }
     return (
         <Box>
         <Text>모두의 프로젝트</Text>
         <Form>
-            <Input type="email" value={email} placeholder="Email" onChange={onEmailChange}></Input>
-            <Input type="password" value={password} placeholder="Password" onChange={onPassChange}></Input>
+            <Input type="email" value={email} placeholder="Email" onChange={onEmailChange} required></Input>
+            <Input type="password" value={password} placeholder="Password" onChange={onPassChange} required></Input>
             <SubmitButton type="button" value="Login" onClick={Login}></SubmitButton>
+            <Warning>{state}</Warning>
         </Form>
         </Box>
     ) 
