@@ -1,14 +1,28 @@
 import React from 'react'
 import Navigation from '../components/Navigation'
+import styled from 'styled-components'
+import {Color} from '../Constants'
+const LogoutBtn=styled.button`
+    width:100px;
+    height:50px;
+    background-color:white;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+`
 
-const Home = ({user}) => {
+const Home = ({user,setUser}) => {
+    const Logout=()=>{
+        alert("Logout!");
+        setUser(null);
+    }
     return (
-        <>
-        <Navigation></Navigation>
         <div>
-            {user.u_email}
+            <Navigation></Navigation>
+            <LogoutBtn onClick={Logout}>
+                Logout
+            </LogoutBtn>
         </div>
-        </>
     )
 }
 
