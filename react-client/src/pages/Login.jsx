@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import LoginForm from '../components/LoginForm'
+
 import {Color} from '../Constants'
+
 
 const LoginBox=styled.div`
     border:1px solid ${Color.border};
@@ -23,7 +25,7 @@ const LoginBox=styled.div`
 const Login = ({setUser}) => {
     return (
         <LoginBox>
-            <LoginForm setUser={setUser}></LoginForm>
+           <LoginForm setUser={setUser}></LoginForm>   
         </LoginBox>
     )
 }
