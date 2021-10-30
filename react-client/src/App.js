@@ -5,7 +5,10 @@ import Login from './pages/Login';
 
 
 const App = () => {
-  const [user,setUser]=useState(null);
+  const [user,setUser]=useState({
+    "u_email":"Admin@gmail.com",
+    "u_nick":"Admin"
+  });
 
   return (
       user?<Home user={user} setUser={setUser}></Home>:<Login setUser={setUser}></Login>
