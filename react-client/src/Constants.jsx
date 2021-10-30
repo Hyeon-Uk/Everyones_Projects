@@ -7,7 +7,9 @@ const Color={
     secondary:"#2d333b",
     tertiary:"#cdd9e5",
     border:"#444c56",
-    text:"#cdd9e5"
+    text:"#cdd9e5",
+    matteblue:"#3065ac",
+    mattered:"#9b111e"
 }
 
 module.exports = {Color,Server};

@@ -25,40 +25,40 @@ const Form=styled.div`
 `
 
 const Input=styled.input`
+    ${props=>
+    props.view===true?`
     width:100%;
     border:1px solid ${Color.border};
     border-radius:15px;
     padding:5px 15px;
     margin-bottom:15px;
+    font-size:20px;`
+    :
+    ` 
     font-size:20px;
+    width:0px;
+    height:0px;
+    display:inline-block;
+    `
+    }
+   
+    transition:all ease 0.5s;
 `
 
 const SubmitButton=styled.input`
-    width:100%;
+    width:30%;
     height:30px;
     padding:5px 15px;
     font-size:15px;
     text-align:center;
     border-radius:15px;
-    background-color:${Color.secondary};
-    color:gray;
+
+    background-color:${props=> props.color==="blue"?Color.matteblue:Color.primary};
+
+    color:white;
     cursor:pointer;
     margin:5px 0px;
-    transition:all ease 2s;
-`
-
-const ToggleBox=styled.input`
-    width:100%;
-    height:30px;
-    padding:5px 15px;
-    font-size:15px;
-    text-align:center;
-    border:1px solid ${Color.secondary};
-    border-radius:15px;
-    background-color:${Color.primary};
-    color:gray;
-    cursor:pointer;
-    transition:all ease 2s;
+    transition:all ease-out 0.3s;
 `
 
 const Warning=styled.span`
@@ -149,11 +149,19 @@ const LoginForm = ({setUser}) => {
             }
         }
     }
-    const toggleSignIn=(e)=>{
+    const act=(e)=>{
         if(signIn){
+            if(e.target.value==="Sign in"){
+                Login();
+                return;
+            }
             setSignIn(false);
         }
         else{
+            if(e.target.value==="Sign up"){
+                Join();
+                return;
+            }
             setSignIn(true);
         }
         setEmail("");
@@ -169,21 +177,21 @@ const LoginForm = ({setUser}) => {
         <Box>
         <Text>모두의 프로젝트</Text>
         <Form>
-            <Input type="email" value={email} placeholder="Email" onChange={onEmailChange} required></Input>
-            <Input type="password" value={password} placeholder="Password" onChange={onPassChange} required></Input>
-            {signIn?
-            <>
-            <SubmitButton type="button" value="Sign in" onClick={Login}></SubmitButton>
-            <ToggleBox type="button" value="Sign up" onClick={toggleSignIn}></ToggleBox>
-            </>
-            :
-            <>
-             <Input type="password" value={passwordCheck} placeholder="PasswordCheck" onChange={onPassCheckChange} required></Input>
-            <Input type="text" value={nick} placeholder="NickName" onChange={onNickChange} required></Input>
-            <ToggleBox type="button" value="Sign in" onClick={toggleSignIn}></ToggleBox>
-            <SubmitButton type="button" value="Sign up" onClick={Join}></SubmitButton>
-            </>
-            }
+            <Input type="email" value={email} placeholder="Email" onChange={onEmailChange} required view={true}></Input>
+            <Input type="password" value={password} placeholder="Password" onChange={onPassChange} required view={true}></Input>
+            <Input 
+            type="password" 
+            value={passwordCheck}
+             placeholder="PasswordCheck" 
+             onChange={onPassCheckChange} 
+            required={!signIn?true:false}
+            view={!signIn?true:false}>
+            
+             </Input>
+            <Input type="text" value={nick} placeholder="NickName" onChange={onNickChange}required={!signIn?true:false}
+            view={!signIn?true:false}></Input>
+            <SubmitButton type="button" value="Sign in" onClick={act} color={signIn?"blue":""}></SubmitButton>
+            <SubmitButton type="button" value="Sign up" onClick={act} color={!signIn?"blue":""}></SubmitButton>
             <Warning>{state}</Warning>
         </Form>
         </Box>
