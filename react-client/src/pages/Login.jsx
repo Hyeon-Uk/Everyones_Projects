@@ -20,6 +20,7 @@ const LoginBox=styled.div`
     justify-content:center;
     align-items:center;
     font-size:50px;
+    background-color:rgba(0,0,0,0.3);
 `
 
 const Login = ({setUser}) => {

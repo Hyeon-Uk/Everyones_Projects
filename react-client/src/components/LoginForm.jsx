@@ -6,6 +6,10 @@ axios.defaults.withCredentials=true;
 // axios.defaults.baseURL="http://localhost:8000/"
 const Box=styled.div`
     width:50%;
+    background-color:transparent;
+    & *{
+        background-color:transparent;
+    }
 `
 
 const Text=styled.div`
