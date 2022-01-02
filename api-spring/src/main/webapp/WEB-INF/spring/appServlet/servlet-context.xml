@@ -21,8 +21,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.bs.lec17" />
-	
+	<context:component-scan base-package="com.controller" />
+
 	<!-- <beans:bean id="service" class="com.bs.lec17.member.service.MemberService"></beans:bean> -->
 	
 </beans:beans>
