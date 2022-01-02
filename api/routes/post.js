@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {verifyToken} = require('./verifyToken');
+const {verifyToken,verifyTokenAndAuthorization} = require('./verifyToken');
 const {User,Post} = require('../models');
 
-router.post('/post', verifyToken, async (req, res) => {
+router.post('/post', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const {publisher, title: p_title, content: p_content} = req.body;
         const data = {

@@ -6,5 +6,5 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<bean id="userDao" class="com.dao.UserDaoTemp"/>
+	<bean id="userDao" class="com.dao.UserDao"/>
 </beans>

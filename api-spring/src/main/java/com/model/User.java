@@ -1,10 +1,20 @@
 package com.model;
 
 public class User {
+    private String id;
+
+
     private String email;
     private String nick;
     private String password;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public User(String email, String nick, String password) {
         this.email = email;
         this.nick = nick;

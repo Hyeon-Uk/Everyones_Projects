@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import styled from 'styled-components'
 import {Color} from '../Constants'
+
 const Header=styled.div`
     width:100%;
     height:60px;
@@ -86,6 +87,16 @@ const DropdownMenuItem=styled.div`
 
 `
 
+const Plus=styled.a`
+    width:50px;
+    height:50px;
+    text-decoration:none;
+    color:white;
+    justify-content:center;
+    align-items:center;
+    font-size:15px;
+`
+
 const Navigation = ({user,setUser}) => {
     const [dropdown,setDropdown]=useState(false);
     const Dropdown=(e)=>{
@@ -100,6 +111,7 @@ const Navigation = ({user,setUser}) => {
         <Header >
             <Logo href="/"></Logo>
             <Menu>
+                <Plus href="/post">+</Plus>
                 <Profile src="https://avatars.githubusercontent.com/u/43038815?v=4" onClick={Dropdown}>
                    <DropdownMenu dropdown={dropdown}>
                         <DropdownMenuItem>{user.u_nick}</DropdownMenuItem>
